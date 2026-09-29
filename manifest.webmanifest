@@ -1,6 +1,6 @@
 {
-  "name": "Averta Vale Order Alerts",
-  "short_name": "Averta Vale",
+  "name": "Shopify Style Demo Alerts",
+  "short_name": "AV Demo",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -9,9 +9,9 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "./assets/averta-bag-logo.png",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     }
   ]
