@@ -137,15 +137,17 @@ function addOne() {
 
   $("feed").querySelector(".empty")?.remove();
 
-  if ("Notification" in window &&
-      Notification.permission === "granted") {
-    try {
-      new Notification("Shopify", {
-        body:`${name} has a new order for ${items} ${items===1?"item":"items"} totaling ${money(cents)} from Online Store.`
-        icon: "./icon.svg"
-      });
-    } catch (e) {}
+if ("Notification" in window &&
+    Notification.permission === "granted") {
+  try {
+    new Notification("Shopify", {
+      body: `${name} has a new order for ${items} ${items === 1 ? "item" : "items"} totaling ${money(cents)} from Online Store.`,
+      icon: "./icon.svg"
+    });
+  } catch (e) {
+    console.error("Notification error:", e);
   }
+}
 
   done++;
   status(true);
