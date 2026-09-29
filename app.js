@@ -140,7 +140,7 @@ function addOne() {
   if ("Notification" in window &&
       Notification.permission === "granted") {
     try {
-      new Notification("Shopify · Test alert", {
+      new Notification("Shopify", {
         body: `${items} ${items === 1 ? "item" : "items"} totaling ${money(cents)}. Simulated alert.`,
         icon: "./icon.svg"
       });
@@ -201,19 +201,15 @@ $("start").addEventListener("click", async () => {
     return;
   }
 
-  try {
-    if ("Notification" in window &&
-        Notification.permission !== "granted") {
-      await enablePush();
-    } else if ("serviceWorker" in navigator) {
-      await navigator.serviceWorker.register("./sw.js");
-    }
-  } catch (error) {
-    console.error("Push setup:", error);
-    alert("Push setup failed: " + error.message);
-    return;
+try {
+  if ("Notification" in window) {
+    await enablePush();
   }
-
+} catch (error) {
+  console.error("Push setup:", error);
+  alert("Push setup failed: " + error.message);
+  return;
+}
   done = 0;
   target = n;
 
