@@ -141,7 +141,7 @@ function addOne() {
       Notification.permission === "granted") {
     try {
       new Notification("Shopify", {
-        body: `${items} ${items === 1 ? "item" : "items"} totaling ${money(cents)}. Simulated alert.`,
+        body:`${name} has a new order for ${items} ${items===1?"item":"items"} totaling ${money(cents)} from Online Store.`
         icon: "./icon.svg"
       });
     } catch (e) {}
