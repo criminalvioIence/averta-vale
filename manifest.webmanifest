@@ -1,0 +1,18 @@
+{
+  "name": "Averta Vale Order Alerts",
+  "short_name": "Averta Vale",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#09152b",
+  "theme_color": "#09152b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
