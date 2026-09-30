@@ -110,7 +110,9 @@ async function enablePush() {
   const registration =
     await navigator.serviceWorker.register("./sw.js");
 
-  const permission = Notification.permission;
+  const permission = await Notification.requestPermission();
+
+alert("iOS returned: " + permission);
   
 if (permission !== "granted") {
   alert("Permission check failed: " + permission);
