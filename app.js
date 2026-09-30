@@ -132,10 +132,19 @@ alert("Permission check passed! Moving to push setup.");
 
   alert("Public key received: " + Boolean(publicKey));
 
-  const subscription = await registration.pushManager.subscribe({
+let subscription;
+
+try {
+  subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: decodeKey(publicKey)
   });
+
+  alert("Push subscription created successfully!");
+} catch (error) {
+  alert("Subscription error: " + error.name + "\n" + error.message);
+  throw error;
+}
 
   const response = await fetch(`${PUSH_SERVER}/subscribe`, {
     method: "POST",
