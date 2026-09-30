@@ -122,6 +122,7 @@ alert("Permission check passed! Moving to push setup.");
   const keyResponse = await fetch(
     `${PUSH_SERVER}/vapid-public`
   );
+  alert("VAPID response status: " + keyResponse.status);
 
   if (!keyResponse.ok) {
     throw new Error("Could not retrieve the push key.");
