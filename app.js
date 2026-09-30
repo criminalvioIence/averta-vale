@@ -112,19 +112,15 @@ async function enablePush() {
 
   const permission = await Notification.requestPermission();
 
-alert("iOS returned: " + permission);
   
 if (permission !== "granted") {
   alert("Permission check failed: " + permission);
   throw new Error("Notification permission was not granted.");
 }
 
-alert("Permission check passed!");
-
   const keyResponse = await fetch(
     `${PUSH_SERVER}/vapid-public`
   );
-  alert("VAPID response status: " + keyResponse.status);
 
   if (!keyResponse.ok) {
     throw new Error("Could not retrieve the push key.");
@@ -132,7 +128,6 @@ alert("Permission check passed!");
 
   const { publicKey } = await keyResponse.json();
 
-  alert("Public key received: " + Boolean(publicKey));
 
 let subscription;
 
@@ -142,7 +137,6 @@ try {
     applicationServerKey: decodeKey(publicKey)
   });
 
-  alert("Push subscription created successfully!");
 } catch (error) {
   alert("Subscription error: " + error.name + "\n" + error.message);
   throw error;
@@ -156,7 +150,6 @@ try {
     body: JSON.stringify(subscription)
   });
 
-  alert("Cloudflare subscription status: " + response.status);
 
   if (!response.ok) {
     throw new Error("Could not save the push subscription.");
