@@ -314,4 +314,3 @@ $("start").addEventListener("click", async () => {
 
   timer = setTimeout(next, 450);
 });
-}
