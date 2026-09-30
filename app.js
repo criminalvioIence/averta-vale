@@ -273,15 +273,25 @@ $("start").addEventListener("click", async () => {
     return;
   }
 
-  if (!Number.isFinite(a) ||
-      !Number.isFinite(b) ||
-      a <= 0 ||
-      b > 360 ||
-      a > b) {
+  if (
+    !Number.isFinite(a) ||
+    !Number.isFinite(b) ||
+    a <= 0 ||
+    b > 360 ||
+    a > b
+  ) {
     alert("Set a valid range, with a maximum of $360.00.");
     return;
   }
-    
+
+  try {
+    await namesReady;
+  } catch (error) {
+    console.error("Name loading error:", error);
+    alert("Could not load the name lists. Please refresh the app.");
+    return;
+  }
+
   try {
     if ("Notification" in window) {
       await enablePush();
@@ -292,17 +302,6 @@ $("start").addEventListener("click", async () => {
     return;
   }
 
-  done = 0;
-
-try {
-  if ("Notification" in window) {
-    await enablePush();
-  }
-} catch (error) {
-  console.error("Push setup:", error);
-  alert("Push setup failed: " + error.message);
-  return;
-}
   done = 0;
   target = n;
 
@@ -315,16 +314,4 @@ try {
 
   timer = setTimeout(next, 450);
 });
-
-$("stop").addEventListener("click", stop);
-
-$("clear").addEventListener("click", () => {
-  $("feed").innerHTML =
-    '<div class="empty">No alerts yet.</div>';
-});
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
-  });
 }
