@@ -130,6 +130,8 @@ alert("Permission check passed! Moving to push setup.");
 
   const { publicKey } = await keyResponse.json();
 
+  alert("Public key received: " + Boolean(publicKey));
+
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: decodeKey(publicKey)
