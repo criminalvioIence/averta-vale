@@ -2,8 +2,6 @@ const $ = id => document.getElementById(id);
 
 let timer = null, done = 0, target = 0;
 
-const alertAudio = new Audio("./assets/alert-tone.mp3");
-alertAudio.preload = "auto";
 
 const PUSH_SERVER = "https://shopify-push.austinmhanzel.workers.dev";
 
@@ -227,8 +225,7 @@ if ("Notification" in window &&
   status(true);
 
   if (document.visibilityState === "visible") {
-    alertAudio.currentTime = 0;
-    alertAudio.play().catch(() => {});
+
   }
 
   if (done >= target) stop();
