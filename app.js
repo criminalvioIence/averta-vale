@@ -1,3 +1,5 @@
+alert("AVERTA DEBUG VERSION 2");
+
 const $ = id => document.getElementById(id);
 
 let timer = null, done = 0, target = 0;
