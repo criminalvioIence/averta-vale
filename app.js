@@ -111,15 +111,6 @@ async function enablePush() {
     await navigator.serviceWorker.register("./sw.js");
 
   const permission = await Notification.requestPermission();
-console.log("Notification permission:", permission);
-console.log("Current permission:", Notification.permission);
-console.log("Standalone mode:", window.matchMedia("(display-mode: standalone)").matches);
-  alert(
-  "Permission: " + permission +
-  "\nCurrent: " + Notification.permission +
-  "\nStandalone: " +
-  window.matchMedia("(display-mode: standalone)").matches
-);
   
   if (permission !== "granted") {
     throw new Error("Notification permission was not granted.");
