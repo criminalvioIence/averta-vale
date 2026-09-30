@@ -154,6 +154,8 @@ try {
     body: JSON.stringify(subscription)
   });
 
+  alert("Cloudflare subscription status: " + response.status);
+
   if (!response.ok) {
     throw new Error("Could not save the push subscription.");
   }
