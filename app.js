@@ -248,14 +248,22 @@ function stop() {
 function next() {
   if (timer === null) return;
 
+  if (done >= target) {
+    stop();
+    return;
+  }
+
   addOne();
 
-  if (timer !== null) {
-    timer = setTimeout(
-      next,
-      Number($("speed").value) * 1000
-    );
+  if (done >= target) {
+    stop();
+    return;
   }
+
+  timer = setTimeout(
+    next,
+    Number($("speed").value) * 1000
+  );
 }
 
 $("start").addEventListener("click", async () => {
