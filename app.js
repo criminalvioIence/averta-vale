@@ -110,14 +110,14 @@ async function enablePush() {
   const registration =
     await navigator.serviceWorker.register("./sw.js");
 
-  const permission = await Notification.requestPermission();
+  const permission = Notification.permission;
   
 if (permission !== "granted") {
   alert("Permission check failed: " + permission);
   throw new Error("Notification permission was not granted.");
 }
 
-alert("Permission check passed! Moving to push setup.");
+alert("Permission check passed!");
 
   const keyResponse = await fetch(
     `${PUSH_SERVER}/vapid-public`
