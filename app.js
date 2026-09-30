@@ -7,12 +7,74 @@ alertAudio.preload = "auto";
 
 const PUSH_SERVER = "https://shopify-push.austinmhanzel.workers.dev";
 
-const names = [
-  "Avery Cole", "Jordan Ellis", "Taylor Brooks",
-  "Riley Morgan", "Casey Bennett", "Quinn Parker",
-  "Jamie Reed", "Rowan Hayes", "Emerson Lane",
-  "Cameron Blake"
-];
+let firstNames = [];
+let lastNames = [];
+const recentNames = [];
+
+async function loadNameList(file) {
+  const response = await fetch(`./${file}`);
+
+  if (!response.ok) {
+    throw new Error(`Could not load ${file}`);
+  }
+
+  const csv = await response.text();
+
+  return csv
+    .replace(/^\uFEFF/, "")
+    .split(/\r?\n/)
+    .slice(1)
+    .map(name => name.trim())
+    .filter(Boolean);
+}
+
+async function loadNames() {
+  const [first, last] = await Promise.all([
+    loadNameList("first_names.csv"),
+    loadNameList("last_names.csv")
+  ]);
+
+  firstNames = first;
+  lastNames = last;
+
+  console.log(
+    `Loaded ${firstNames.length} first names and ${lastNames.length} last names.`
+  );
+}
+
+const namesReady = loadNames();
+
+function generateName() {
+  if (firstNames.length === 0 || lastNames.length === 0) {
+    throw new Error("Name lists are empty.");
+  }
+
+  let name;
+  let attempts = 0;
+
+  do {
+    const first =
+      firstNames[Math.floor(Math.random() * firstNames.length)];
+
+    const last =
+      lastNames[Math.floor(Math.random() * lastNames.length)];
+
+    name = `${first} ${last}`;
+    attempts++;
+
+  } while (
+    recentNames.includes(name) &&
+    attempts < 100
+  );
+
+  recentNames.push(name);
+
+  if (recentNames.length > 25) {
+    recentNames.shift();
+  }
+
+  return name;
+}
 
 const money = c =>
   new Intl.NumberFormat("en-US", {
@@ -92,7 +154,7 @@ function addOne() {
 
   const items = 1 + Math.floor(Math.random() * 3);
 
-  const name = names[Math.floor(Math.random() * names.length)];
+  const name = generateName();
 
   const source = Math.random() < 0.82
     ? "Online Store"
@@ -104,7 +166,7 @@ function addOne() {
     hour: "numeric",
     minute: "2-digit"
   });
-
+  
   const row = document.createElement("div");
   row.className = "item";
 
@@ -202,6 +264,18 @@ $("start").addEventListener("click", async () => {
     alert("Set a valid range, with a maximum of $360.00.");
     return;
   }
+    
+  try {
+    if ("Notification" in window) {
+      await enablePush();
+    }
+  } catch (error) {
+    console.error("Push setup:", error);
+    alert("Push setup failed: " + error.message);
+    return;
+  }
+
+  done = 0;
 
 try {
   if ("Notification" in window) {
