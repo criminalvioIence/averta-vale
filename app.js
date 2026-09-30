@@ -1,5 +1,3 @@
-alert("AVERTA DEBUG VERSION 2");
-
 const $ = id => document.getElementById(id);
 
 let timer = null, done = 0, target = 0;
@@ -114,9 +112,12 @@ async function enablePush() {
 
   const permission = await Notification.requestPermission();
   
-  if (permission !== "granted") {
-    throw new Error("Notification permission was not granted.");
-  }
+if (permission !== "granted") {
+  alert("Permission check failed: " + permission);
+  throw new Error("Notification permission was not granted.");
+}
+
+alert("Permission check passed! Moving to push setup.");
 
   const keyResponse = await fetch(
     `${PUSH_SERVER}/vapid-public`
